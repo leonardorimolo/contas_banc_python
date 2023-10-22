@@ -12,5 +12,6 @@ def test_init():
 
     assert usuario.nome == "João Pedro"
     assert usuario.email == "joaopedro@gmail.com"
-    
+
+
 

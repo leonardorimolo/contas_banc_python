@@ -1,6 +1,8 @@
-import main as conta_bancaria
+from main.contas_bancarias import Conta_Bancaria
+from main.mensagens import MensagensErro,MensagensSucesso
 
-class Corrente(conta_bancaria.Conta_Bancaria):
+
+class Corrente(Conta_Bancaria):
 
     def init(self,saldo:float):
         super().init(saldo)
@@ -15,6 +17,8 @@ class Corrente(conta_bancaria.Conta_Bancaria):
         self._taxa_mes_fixa = nova_taxa_mes_fixa
 
     
+
+
     def sacar(self,valor:float):
         return super().sacar(valor,'corrente')
     
@@ -23,7 +27,7 @@ class Corrente(conta_bancaria.Conta_Bancaria):
     
     def fechar_mes(self):
         self.saldo = self.saldo - self.taxa_mes_fixa
-        return f'A sua conta corrente foi cobrada em R${self.taxa_mes_fixa:2f} de taxa de manutenção neste mês! \n Saldo atual: R$ {self.saldo:2f}'
+        return MensagensSucesso.sucesso_taxa(self.taxa_mes_fixa,self.saldo)
     
     def atualizar_limite(self,novo_limite:float):
         self.limite = novo_limite

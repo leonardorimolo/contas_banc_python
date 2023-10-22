@@ -1,6 +1,7 @@
-import main.conta_bancaria as conta_bancaria
+from main.contas_bancarias import Conta_Bancaria
+from main.mensagens import MensagensErro,MensagensSucesso
 
-class Poupanca(conta_bancaria.Conta_Bancaria):
+class Poupanca(Conta_Bancaria):
     
     def __init__(self,saldo:float):
         super().__init__(saldo)
@@ -27,4 +28,4 @@ class Poupanca(conta_bancaria.Conta_Bancaria):
     
     def fechar_mes(self):
         self.saldo = self.saldo + (self.saldo * self.taxa_rendimento)
-        return f'A sua conta poupança rendeu um total de R${self.saldo * self.taxa_rendimento:2f} neste mês! \n Saldo atual: R$ {self.saldo:2f}'
+        return MensagensSucesso.sucesso_taxa_saque(self.taxa_rendimento,self.saldo)

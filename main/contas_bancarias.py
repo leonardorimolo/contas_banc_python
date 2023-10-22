@@ -1,12 +1,12 @@
 import abc
-import correntista
-import main.mensagens as mensagens
-import main.conta_poupanca as conta_poupanca
+from main.correntista import Correntista
+from main.mensagens import MensagensErro,MensagensSucesso
+#from main.historico import Historico
 
 class Conta_Bancaria(abc.ABC):
 
-    def __init__(self,saldo:float,limite:float):
-        self._dono = correntista.Correntista()
+    def __init__(self,saldo:float,limite:None):
+        self._dono = Correntista()
         self._saldo = saldo
         self._id_conta = None # len(lista_de_contas)
         self._historico_da_conta = None #Historico()
@@ -56,41 +56,42 @@ class Conta_Bancaria(abc.ABC):
 
 
     @abc.abstractmethod
-    def sacar(self,valor:float,tipo:str,taxa_sob_saque:None):
+    def sacar(self,valor:float,tipo:str,taxa:None):
 
         if tipo == 'poupanca':
             if self.saldo >= valor:
-                self.saldo = self.saldo - (valor + (valor * taxa_sob_saque))
-                return mensagens.MensagensSucesso.sucesso_saque(valor)
+                self.saldo = self.saldo - (valor + (valor * taxa)) #taxa de 10%
+                return MensagensSucesso.sucesso_saque(valor)
 
             else:
-                return mensagens.MensagensErro.saldo_insuficiente_saque(valor)
+                return MensagensErro.saldo_insuficiente_saque(valor)
             
         elif tipo == 'cashback':
             if self.saldo >= valor:
                 self.saldo = self.saldo - valor
-                return mensagens.MensagensSucesso.sucesso_saque(valor)
+                self.saldo = self.saldo + (valor * taxa) #cashback de 5%
+                return MensagensSucesso.sucesso_saque(valor)
 
             else:
-                return mensagens.MensagensErro.saldo_insuficiente_saque(valor)
+                return MensagensErro.saldo_insuficiente_saque(valor)
         
         elif tipo == 'corrente':
              if self.saldo >= valor:
                 self.saldo = self.saldo - valor
-                return mensagens.MensagensSucesso.sucesso_saque(valor)
+                return MensagensSucesso.sucesso_saque(valor)
              
              else:
                  if self.limite >= valor:
                     self.saldo = self.saldo - valor
-                    return mensagens.MensagensSucesso.sucesso_saque(valor) + f'Foi utilizado {valor - self.saldo} Reais do seu limite'
+                    return MensagensSucesso.sucesso_saque(valor) + f'Foi utilizado {valor - self.saldo} Reais do seu limite'
                  
                  else:
-                     return mensagens.MensagensErro.limite_insuficiente_saque
+                     return MensagensErro.limite_insuficiente_saque
         
-    
+    @abc.abstractmethod
     def depositar(self,valor:float):
         self.saldo = self.saldo + valor
-        return mensagens.MensagensSucesso.sucesso_deposito(valor)
+        return MensagensSucesso.sucesso_deposito(valor)
         
 
 
