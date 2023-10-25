@@ -26,5 +26,5 @@ class Cashback(Conta_Bancaria):
         return super().depositar(valor)
     
     def fechar_mes(self):
-        self.saldo = self.saldo + (self.saldo * self.taxa_rendimento)
-        return MensagensSucesso.sucesso_taxa_saque(self.taxa_rendimento,self.saldo)
+        self.saldo = self.saldo + (self.saldo * self._taxa_manu_mes)
+        return MensagensSucesso.sucesso_taxa_saque(self._taxa_manu_mes,self.saldo)
