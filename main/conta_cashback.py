@@ -1,5 +1,5 @@
-from main.contas_bancarias import Conta_Bancaria
-from main.mensagens import MensagensErro,MensagensSucesso
+from contas_bancarias import Conta_Bancaria
+from mensagens import MensagensErro,MensagensSucesso
 
 
 class Cashback(Conta_Bancaria):

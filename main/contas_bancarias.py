@@ -1,16 +1,16 @@
 import abc
-from main.correntista import Correntista
-from main.mensagens import MensagensErro,MensagensSucesso
+from correntista import Correntista
+from mensagens import MensagensErro,MensagensSucesso
 #from main.historico import Historico
 
 class Conta_Bancaria(abc.ABC):
 
-    def __init__(self,saldo:float,limite:None):
-        self._dono = Correntista()
-        self._saldo = saldo
-        self._id_conta = None # len(lista_de_contas)
-        self._historico_da_conta = None #Historico()
-        self.limite = limite
+    def __init__(self):
+        self._dono = None
+        self._saldo = 0
+        self._id_conta = None
+        self._historico_da_conta = None
+        self.limite = None
     
     @property
     def dono(self):
@@ -54,6 +54,17 @@ class Conta_Bancaria(abc.ABC):
         self._limite = novo_limite
 
 
+    @abc.abstractmethod
+    def criar_conta(self,nome,email,limite,lista_de_contas,tipo_conta):
+        ##if email in lista_de_contas:
+          ##  return MensagensErro.email_ja_cadastrado(email,tipo_conta)
+        ##else:
+        self._dono = Correntista(nome=nome,email=email)
+        self._limite = limite
+        self._id_conta = len(lista_de_contas) + 1
+        #self._historico_da_conta = #Historico()
+        print(MensagensSucesso.sucesso_criacao_conta(self,nome,email,limite,tipo_conta))
+
 
     @abc.abstractmethod
     def sacar(self,valor:float,tipo:str,taxa:None):
@@ -95,5 +106,4 @@ class Conta_Bancaria(abc.ABC):
         
 
 
-   
-       
+

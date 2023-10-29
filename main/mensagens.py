@@ -12,6 +12,9 @@ class MensagensSucesso:
     def sucesso_taxa_saque(self,taxa_rendimento,saldo):
         return f'A sua conta poupança rendeu um total de R${saldo * taxa_rendimento:2f} neste mês! \n Saldo atual: R$ {saldo:2f}'
     
+    def sucesso_criacao_conta(self,nome,email,limite,tipo_conta):
+        return f'Conta {tipo_conta} criada com sucesso! \n Nome: {nome} \n Email: {email} \n Limite: {limite}'
+    
     
 
 class MensagensErro:
@@ -27,6 +30,9 @@ class MensagensErro:
     
     def erro_deposito(self,valor):
         return f'Não é possível realizar o depósito no valor de {valor:2f}, tente novamente mais tarde'
+    
+    def email_ja_cadastrado(self,email,tipo_conta):
+        return f'Não é possível realizar o cadastro, o email {email} já está vinculado a uma conta {tipo_conta}'
     
 
 
