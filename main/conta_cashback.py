@@ -1,5 +1,7 @@
-from contas_bancarias import Conta_Bancaria
+from datetime import datetime
+from main.conta_bancaria import Conta_Bancaria
 from mensagens import MensagensErro,MensagensSucesso
+from historico import Historico
 
 
 class Cashback(Conta_Bancaria):
@@ -20,7 +22,14 @@ class Cashback(Conta_Bancaria):
 
         
     def sacar(self,valor:float):
-        return super().sacar(valor,'cashback',self.taxa_cashback_sob_saque)
+        if self.saldo >= valor:
+            self.saldo = self.saldo - valor
+            self.saldo = self.saldo + (valor * self.taxa_cashback_sob_saque) #cashback de 5%
+            print(MensagensSucesso.sucesso_saque(valor))
+            Historico.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+
+        else:
+            print(MensagensErro.saldo_insuficiente_saque(valor))
     
     def depositar(self,valor:float):
         return super().depositar(valor)

@@ -1,5 +1,7 @@
-from contas_bancarias import Conta_Bancaria
+from datetime import datetime
+from main.conta_bancaria import Conta_Bancaria
 from mensagens import MensagensErro,MensagensSucesso
+from historico import Historico
 
 class Poupanca(Conta_Bancaria):
     
@@ -20,7 +22,13 @@ class Poupanca(Conta_Bancaria):
 
         
     def sacar(self,valor:float):
-        return super().sacar(valor,'poupanca',self.taxa_sob_saque)
+        if self.saldo >= valor:
+            self.saldo = self.saldo - (valor + (valor * self.taxa_sob_saque)) #taxa de 10%
+            self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+            print(MensagensSucesso.sucesso_saque(valor))
+
+        else:
+            print(MensagensErro.saldo_insuficiente_saque(valor))
     
 
     def depositar(self,valor:float):

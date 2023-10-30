@@ -1,6 +1,19 @@
 from conta_corrente import Corrente
 
-conta_corrente = Corrente()
-conta_corrente.criar_conta(nome='João Pedro',email='joaopedro@gmail.com',limite=1000)
+conta = Corrente()
 
-conta_corrente.criar_conta(nome='João Silva',email='joaocarlossilva@gmail.com',limite=1000)
+conta.criar_conta(nome='João Pedro',email='JoaoPedro@gmail.com',limite=1000)
+
+conta.sacar(100)
+print()
+conta.depositar(100)
+print()
+
+
+print(conta)
+
+conta.criar_conta(nome='João Pedro',email='JoaoPedro@gmail.com',limite=1000)
+
+print(conta)
+
+

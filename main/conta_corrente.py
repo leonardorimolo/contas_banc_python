@@ -1,5 +1,7 @@
-from contas_bancarias import Conta_Bancaria
+from datetime import datetime
+from conta_bancaria import Conta_Bancaria
 from mensagens import MensagensErro,MensagensSucesso
+from historico import Historico
 
 
 class Corrente(Conta_Bancaria):
@@ -36,8 +38,21 @@ class Corrente(Conta_Bancaria):
         self.lista_de_contas.append(conta_info)
         return conta
 
-    def sacar(self, valor, taxa=None):
-        return super().sacar(valor, self._tipo_conta, taxa)
+    def sacar(self, valor):
+        if self.saldo >= valor:
+            self.saldo = self.saldo - valor
+            print(MensagensSucesso.sucesso_saque(valor))
+            self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+        
+        else:
+            if self.limite >= valor:
+                self.saldo = self.saldo - valor
+                self.limite_gasto = self.limite - valor
+                print(MensagensSucesso.sucesso_saque(valor) + f', Foi utilizado {valor} Reais do seu limite \n Saldo atual: {self.saldo}')
+                self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+            
+            else:
+                print(MensagensErro.limite_insuficiente_saque)
 
     def depositar(self, valor):
         return super().depositar(valor)
@@ -48,6 +63,8 @@ class Corrente(Conta_Bancaria):
     
     def atualizar_limite(self,novo_limite:float):
         self.limite = novo_limite
-        return f'O seu limite foi atualizado para R${self.limite:2f}'
+        return f'O seu limite foi atualizado para R${self.limite}'
     
+    def __str__(self):
+        return f'Conta Corrente: \n ID: {self.id_conta} \n Dono: {self.dono.nome} {self.dono.email} \n Saldo: {self.saldo} \n Limite da conta: {self.limite} \n Limite gasto: {self.limite_gasto}'
     
