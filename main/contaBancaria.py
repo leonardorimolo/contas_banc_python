@@ -1,13 +1,13 @@
 import abc
-from correntista import Correntista
-from mensagens import MensagensErro, MensagensSucesso
-from historico import Historico
+from main.correntista import Correntista
+from main.mensagens import MensagensErro, MensagensSucesso
+from main.historico import Historico
 from datetime import datetime
 
-class Conta_Bancaria(abc.ABC):
+class ContaBancaria(abc.ABC):
 
-    def __init__(self):
-        self._dono = Correntista(nome='', email='')
+    def __init__(self, correntista_dono):
+        self._dono = correntista_dono
         self._saldo = 0
         self._id_conta = 0
         self._historico_da_conta = Historico()
@@ -62,13 +62,6 @@ class Conta_Bancaria(abc.ABC):
     def limite_gasto(self, novo_limite_gasto):
         self._limite_gasto = novo_limite_gasto
 
-    @abc.abstractmethod
-    def criar_conta(self, nome, email, limite, lista_de_contas, tipo_conta):
-        self._dono = Correntista(nome, email)
-        self.limite = limite
-        self.id_conta = len(lista_de_contas) + 1
-        self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Criação de conta {tipo_conta} para {self.dono.email}")
-        print(MensagensSucesso.sucesso_criacao_conta(self.dono.nome, self.dono.email, limite, tipo_conta))
 
     @abc.abstractmethod
     def depositar(self, valor: float):

@@ -1,9 +1,9 @@
 from datetime import datetime
-from main.conta_bancaria import Conta_Bancaria
-from mensagens import MensagensErro,MensagensSucesso
+from main.contaBancaria import ContaBancaria
+from main.mensagens import MensagensErro,MensagensSucesso
 from historico import Historico
 
-class Poupanca(Conta_Bancaria):
+class Poupanca(ContaBancaria):
     
     def __init__(self,saldo:float):
         super().__init__(saldo)

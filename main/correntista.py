@@ -1,5 +1,5 @@
 class Correntista:
-    def __init__(self, nome:str, email:str):
+    def __init__(self, nome: str, email: str) -> object:
         self._nome = nome
         self._email = email
 
