@@ -1,25 +1,17 @@
-from datetime import datetime
 from main.contaBancaria import ContaBancaria
-from main.mensagens import MensagensErro, MensagensSucesso
-from main.historico import Historico
+from main.mensagens import MensagensSucesso, MensagensErro
+from datetime import datetime
 
-
+mensagem_sucesso = MensagensSucesso()
+mensagem_erro = MensagensErro()
 class Corrente(ContaBancaria):
     
     TAXA_MES_FIXA = 20.00
 
-    def __init__(self, correntista):
-        super().__init__(correntista)
+    def __init__(self, nome, email, tipo_conta, limite):
+        super().__init__( nome, email, tipo_conta, limite)
         self._taxa_mes_fixa = Corrente.TAXA_MES_FIXA #20 Reais
-        self._tipo_conta = 'corrente'
 
-    @property
-    def tipo_conta(self):
-        return self._tipo_conta
-
-    @tipo_conta.setter
-    def tipo_conta(self, novo_tipo_conta):
-        self._tipo_conta = novo_tipo_conta
 
     @property
     def taxa_mes_fixa(self):
@@ -29,33 +21,41 @@ class Corrente(ContaBancaria):
     def taxa_mes_fixa(self, nova_taxa_mes_fixa):
         self._taxa_mes_fixa = nova_taxa_mes_fixa
 
-    def sacar(self, valor):
+    def sacar(self, valor: float):
         if self.saldo >= valor:
             self.saldo = self.saldo - valor
-            print(MensagensSucesso.sucesso_saque(valor))
+            print(mensagem_sucesso.sucesso_saque(valor))
             self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+            self.atualizando_arquivo_json(tipo='sacar')
 
         else:
             if self.limite >= valor:
                 self.saldo = self.saldo - valor
-                self.limite_gasto = self.limite - valor
-                print(MensagensSucesso.sucesso_saque(valor) + f', Foi utilizado {valor} Reais do seu limite \n Saldo atual: {self.saldo}')
+                self.limite = self.limite - valor
+                print(mensagem_sucesso.sucesso_saque(valor) + f', Foi utilizado {valor} Reais do seu limite \n Saldo atual: {self.saldo}')
                 self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
+                self.atualizando_arquivo_json(tipo='sacar')
+                self.atualizando_arquivo_json(tipo='limite')
 
             else:
-                print(MensagensErro.limite_insuficiente_saque)
+                print(mensagem_erro.limite_insuficiente_saque(valor))
 
     def depositar(self, valor):
         return super().depositar(valor)
 
+
+
     def fechar_mes(self):
         self.saldo = self.saldo - self.taxa_mes_fixa
-        return MensagensSucesso.sucesso_taxa(self.taxa_mes_fixa,self.saldo)
+        self.atualizando_arquivo_json(tipo='fechar_mes')
+        return mensagem_sucesso.sucesso_taxa_fixa(self.taxa_mes_fixa, self.saldo)
+
+
+
 
     def atualizar_limite(self,novo_limite:float):
         self.limite = novo_limite
+        self.atualizando_arquivo_json(tipo='limite')
         return f'O seu limite foi atualizado para R${self.limite}'
 
-    def __str__(self):
-        return f'Conta Corrente: \n ID: {self.id_conta} \n Dono: {self.dono.nome} {self.dono.email} \n Saldo: {self.saldo} \n Limite da conta: {self.limite} \n Limite gasto: {self.limite_gasto}'
 

@@ -18,3 +18,8 @@ def test_update():
 
 
 
+if __name__ == "__main__":
+    test_init()
+    test_update()
+    print("OK")
+    
