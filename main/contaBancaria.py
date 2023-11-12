@@ -132,7 +132,8 @@ class ContaBancaria(abc.ABC):
                 self.saldo = float(conta["Saldo"])
                 self.limite = float(conta["Limite"])
                 self.correntista = conta["Correntista"]
+                self.tipo_conta = conta["Tipo"]
                 return conta
         else:
-            # print(mensagem_erro.erro_busca_conta)
+            print(mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta))
             return None

@@ -2,6 +2,8 @@ from main.contaBancaria import ContaBancaria
 from main.mensagens import MensagensSucesso, MensagensErro
 from datetime import datetime
 
+mensagens_erro = MensagensErro()
+mensagens_sucesso = MensagensSucesso()
 class Poupanca(ContaBancaria):
 
     def __init__(self, nome, email, tipo_conta, limite):
@@ -21,11 +23,11 @@ class Poupanca(ContaBancaria):
         if self.saldo >= valor:
             self.saldo = self.saldo - (valor + (valor * self.taxa_sob_saque))  # taxa de 10%
             self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Saque de R$ {valor}")
-            print(MensagensSucesso.sucesso_saque(valor))
+            print(mensagens_sucesso.sucesso_saque(valor))
             self.atualizando_arquivo_json(tipo='sacar')
 
         else:
-            print(MensagensErro.saldo_insuficiente_saque(valor))
+            print(mensagens_erro.saldo_insuficiente_saque(valor))
 
 
     def depositar(self, valor: float):
@@ -34,7 +36,7 @@ class Poupanca(ContaBancaria):
     def fechar_mes(self):
         self.saldo = self.saldo + (self.saldo * self.taxa_rendimento)
         self.atualizando_arquivo_json(tipo='fechar_mes')
-        return MensagensSucesso.sucesso_taxa_saque(self.taxa_rendimento, self.saldo)
+        return mensagens_sucesso.sucesso_taxa_saque(self.taxa_rendimento, self.saldo)
 
 
 
