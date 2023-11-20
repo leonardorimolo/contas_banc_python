@@ -1,7 +1,6 @@
 import abc
 import json
 
-from main.correntista import Correntista
 from main.historico import Historico
 from datetime import datetime
 from main.mensagens import MensagensSucesso, MensagensErro
@@ -80,38 +79,36 @@ class ContaBancaria(abc.ABC):
 
     def lendo_arquivo_json(self):
         with open('contas.json', 'r') as arquivo:
-            self.lista_de_contas = json.load(arquivo)
+            return json.load(arquivo)
 
-
-    def salvando_arquivo_json(self):
-        with open('contas.json', 'w') as arquivo:
-            json.dump(self.lista_de_contas, arquivo, indent=4)
-
-
-    def atualizando_arquivo_json(self, tipo):
-        for conta in self.lista_de_contas:
-            if conta['Email'] == self.email:
-                if tipo == 'sacar' or tipo == 'depositar' or tipo == 'fechar_mes':
-                    conta['Saldo'] = str(self.saldo)
-
-                elif tipo == 'limite':
-                    conta['Limite'] = str(self.limite)
-
-                self.salvando_arquivo_json()
+    # def salvando_arquivo_json(self):
+    #     with open('contas.json', 'w') as arquivo:
+    #         json.dump(self.lista_de_contas, arquivo, indent=4)
+    #
+    #
+    # def atualizando_arquivo_json(self, tipo):
+    #     for conta in self.lista_de_contas:
+    #         if conta['Email'] == self.email:
+    #             if tipo == 'sacar' or tipo == 'depositar' or tipo == 'fechar_mes':
+    #                 conta['Saldo'] = str(self.saldo)
+    #
+    #             elif tipo == 'limite':
+    #                 conta['Limite'] = str(self.limite)
+    #
+    #             self.salvando_arquivo_json()
 
     @abc.abstractmethod
     def depositar(self, valor: float):
+        # Checa se valor é maior que zero
+        if valor < 0:
+            return mensagem_erro.erro_deposito(valor)
         self.saldo = self.saldo + valor
-        print(mensagem_sucesso.sucesso_deposito(valor) + f' \n Saldo atual: {self.saldo}')
         self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Depósito de R$ {valor}")
-        self.atualizando_arquivo_json(tipo='depositar')
+        return mensagem_sucesso.sucesso_deposito(valor) + f' \n Saldo atual: {self.saldo}'
 
 
     def criar_conta(self):
-        self.lendo_arquivo_json()
-        tam = len(self.lista_de_contas) + 1
         nova_conta = {
-            "ID": str(tam),
             "Correntista": str(self.correntista),
             "Email": str(self.email),
             "Saldo": str(self.saldo),
@@ -119,21 +116,39 @@ class ContaBancaria(abc.ABC):
             "Tipo": str(self.tipo_conta)
         }
         self.lista_de_contas.append(nova_conta)
-        print(mensagem_sucesso.sucesso_criacao_conta(self.correntista, self.email, self.tipo_conta))
         self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Criação da conta do {self.email}")
+        return mensagem_sucesso.sucesso_criacao_conta(self.correntista, self.email, self.tipo_conta)
 
     def buscar_conta(self, email):
-        self.lendo_arquivo_json()
-        for conta in self.lista_de_contas:
+        dados = self.lendo_arquivo_json()
+        for conta in dados:
             if conta["Email"] == email:
-                print(
-                    f'Conta encontrada: \n Correntista: {conta["Correntista"]} \n Email: {conta["Email"]} \n Saldo: {conta["Saldo"]} \n Limite: {conta["Limite"]}')
                 self.email = conta["Email"]
                 self.saldo = float(conta["Saldo"])
-                self.limite = float(conta["Limite"])
-                self.correntista = conta["Correntista"]
-                self.tipo_conta = conta["Tipo"]
+                if not (conta["Limite"] == None):
+                    self.limite = float(conta["Limite"])
+                else:
+                    self.limite = None
+                self.correntista = conta["Nome"]
+                self.tipo_conta = conta["Tipo Conta"]
                 return conta
         else:
-            print(mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta))
-            return None
+            return mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta)
+
+    def __str__(self):
+        return f"""\nConta encontrada:   
+        Correntista: {self.correntista}
+        Email: {self.email}
+        Saldo: {self.saldo}
+        Limite: {self.limite}
+        """
+
+    def dicionario(self):
+        return {
+            "Nome": self.correntista,
+            "Email": self.email,
+            "Tipo Conta": self.tipo_conta,
+            "Saldo": self.saldo,
+            "Limite": self.limite,
+            "Historico": self.historico_da_conta.guarda_historico()
+        }

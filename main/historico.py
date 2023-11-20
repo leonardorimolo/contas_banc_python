@@ -16,3 +16,5 @@ class Historico():
     def __str__(self):
         print(f'Histórico de operações da conta: {self.historico}')
 
+    def guarda_historico(self):
+        return self.historico

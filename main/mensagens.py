@@ -36,6 +36,8 @@ class MensagensErro:
         return f'Não foi possível localizar uma conta {tipo} vinculada ao email {email}, tente novamente mais tarde'
 
 
+    def erro_deposito(self, valor):
+        return  f"Você não pode sacar um valor negativo! {valor}"
 
 
 
