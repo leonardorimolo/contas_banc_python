@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="73c64f61-c70a-4627-893f-536ac897dd1f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/interface/dados.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_conta_cashback.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_conta_poupanca.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/contas_banc_python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/contas_banc_python.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/contas.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/tela_inicial.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/tela_inicial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/contaBancaria.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/contaBancaria.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/contaCashback.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/contaCashback.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/contaCorrente.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/contaCorrente.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/contaPoupanca.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/contaPoupanca.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/correntista.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/historico.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/historico.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/mensagens.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/mensagens.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_conta_corrente.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_conta_corrente.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_correntista.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2YQ7sOX7huWw5c9o6mf5Fxyjr59" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="73c64f61-c70a-4627-893f-536ac897dd1f" name="Changes" comment="" />
+      <created>1700446155911</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1700446155911</updated>
+      <workItem from="1700446158587" duration="11268000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
