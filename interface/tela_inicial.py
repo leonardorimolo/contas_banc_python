@@ -98,7 +98,7 @@ def criar_conta():
         tela_inicial()
 
     conta.historico_da_conta = Historico([])
-    conta.criar_conta()
+    print(conta.criar_conta())
 
     atualiza_arquivo_json(conta.dicionario())
 

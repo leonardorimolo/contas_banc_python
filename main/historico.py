@@ -18,3 +18,6 @@ class Historico():
 
     def guarda_historico(self):
         return self.historico
+
+    def __str__(self) -> str:
+        return f"{self.historico}"
