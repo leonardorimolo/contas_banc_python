@@ -86,13 +86,25 @@ def criar_conta():
     tipo_conta = opcoes(["1", "2", "3", "9"])
 
     if tipo_conta == "1":
-        conta = Poupanca(nome, email)
+        if verificar_se_conta_existe(email, "Poupança"):
+            print(mensagem_erro.email_ja_cadastrado(email=email, tipo_conta= "Poupança"))
+            tela_inicial()
+        else: 
+            conta = Poupanca(nome, email)
 
     elif tipo_conta == "2":
-        conta = Cashback(nome, email)
+        if verificar_se_conta_existe(email, "Cashback"):
+            print(mensagem_erro.email_ja_cadastrado(email=email, tipo_conta="Cashback"))
+            tela_inicial()
+        else: 
+            conta = Cashback(nome, email)
 
     elif tipo_conta == "3":
-        conta = Corrente(nome, email)
+        if verificar_se_conta_existe(email, "Corrente"):
+            print(mensagem_erro.email_ja_cadastrado(email=email, tipo_conta="Corrente"))
+            tela_inicial()
+        else: 
+            conta = Corrente(nome, email)
 
     elif tipo_conta == "9":
         tela_inicial()
@@ -102,6 +114,13 @@ def criar_conta():
 
     atualiza_arquivo_json(conta.dicionario())
 
+def verificar_se_conta_existe(email, tipo):
+    conta = Corrente(nome="Verificação", email="Verificação")
+
+    if conta.buscar_conta(email, tipo) == mensagem_erro.conta_nao_encontrada(email,tipo=tipo):
+        return False 
+    else:
+        return True
 
 def buscar_conta():
     print("""

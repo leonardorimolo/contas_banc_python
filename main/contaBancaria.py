@@ -86,10 +86,13 @@ class ContaBancaria(abc.ABC):
     def criar_conta(self):
         ...
 
-    def buscar_conta(self, email):
+    def buscar_conta(self, email, tipo_conta):
         dados = self.lendo_arquivo_json()
         for conta in dados:
-            if conta["Email"] == email:
+            #print(conta)
+            if conta["Email"] == email and conta["Tipo Conta"] == tipo_conta:
+                print("\n\nConta encontrada: ")
+                print(conta)
                 self.email = conta["Email"]
                 self.saldo = float(conta["Saldo"])
                 if not (conta["Limite"] == None):
@@ -100,8 +103,11 @@ class ContaBancaria(abc.ABC):
                 self.tipo_conta = conta["Tipo Conta"]
                 self.historico_da_conta = Historico(conta["Historico"])
                 return conta
+            else:
+                print(conta)
+
         else:
-            return mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta)
+            return mensagem_erro.conta_nao_encontrada(email,tipo=tipo_conta)
            
 
     def __str__(self):
