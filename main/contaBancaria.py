@@ -80,22 +80,7 @@ class ContaBancaria(abc.ABC):
     def lendo_arquivo_json(self):
         with open('contas.json', 'r') as arquivo:
             return json.load(arquivo)
-
-    # def salvando_arquivo_json(self):
-    #     with open('contas.json', 'w') as arquivo:
-    #         json.dump(self.lista_de_contas, arquivo, indent=4)
-    #
-    #
-    # def atualizando_arquivo_json(self, tipo):
-    #     for conta in self.lista_de_contas:
-    #         if conta['Email'] == self.email:
-    #             if tipo == 'sacar' or tipo == 'depositar' or tipo == 'fechar_mes':
-    #                 conta['Saldo'] = str(self.saldo)
-    #
-    #             elif tipo == 'limite':
-    #                 conta['Limite'] = str(self.limite)
-    #
-    #             self.salvando_arquivo_json()
+        
 
     @abc.abstractmethod
     def depositar(self, valor: float):
@@ -134,6 +119,7 @@ class ContaBancaria(abc.ABC):
                 return conta
         else:
             return mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta)
+           
 
     def __str__(self):
         return f"""\nConta encontrada:   

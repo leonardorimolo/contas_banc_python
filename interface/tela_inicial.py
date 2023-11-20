@@ -13,12 +13,16 @@ sys.path.append(project_dir)
 from main.contaPoupanca import Poupanca
 from main.contaCorrente import Corrente
 from main.contaCashback import Cashback
+from main.contaBancaria import ContaBancaria
 from main.mensagens import MensagensErro, MensagensSucesso
 from interface.dados import atualiza_arquivo_json
 from interface.dados import deletar_conta_json
+from interface.dados import lendo_arquivo_json
+from interface.dados import fechar_todas_contas
 
 mensagem_erro = MensagensErro()
 mensagem_sucesso = MensagensSucesso()
+
 
 
 def run_app():
@@ -32,9 +36,10 @@ def tela_inicial():
     " 2 " - Buscar conta
     " 3 " - Atualizar os dados da conta
     " 4 " - Deletar conta
+    " 5 " - Fechar mês
     " 9 " - Sair
 """)
-    usuario = opcoes(["1", "2", "3", "4", "9"])
+    usuario = opcoes(["1", "2", "3", "4", "5","9"])
 
     match usuario:
         case "1":
@@ -53,6 +58,10 @@ def tela_inicial():
         case "4":
             conta = buscar_conta()
             deletar_conta(conta)
+            tela_inicial()
+
+        case "5":
+            fechar_mes()
             tela_inicial()
 
         case "9":
@@ -219,6 +228,11 @@ def deletar_conta(conta):
         return
 
 
+def fechar_mes():
+    contas = fechar_todas_contas()
+    
+
+
 def opcoes(list):
     resp = input("R: ")
     while resp not in list:
@@ -229,3 +243,4 @@ def opcoes(list):
 
 if __name__ == "__main__":
     run_app()
+    

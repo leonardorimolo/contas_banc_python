@@ -1,6 +1,8 @@
 import os
 import json
-
+from main.contaCorrente import Corrente
+from main.contaPoupanca import Poupanca
+from main.contaCashback import Cashback
 
 def lendo_arquivo_json():
     caminho_do_arquivo = 'contas.json'
@@ -41,6 +43,33 @@ def atualiza_arquivo_json(conta):
 
     salvando_arquivo_json(dados)
 
+def fechar_todas_contas():
+    dados = lendo_arquivo_json()
+
+    for conta in dados:
+        correntista = conta["Nome"]
+        email = conta["Email"]
+        saldo = float(conta["Saldo"])
+        limite = float(conta["Limite"]) if conta["Limite"] is not None else 0.0
+        tipo_conta = conta["Tipo Conta"]
+
+        if tipo_conta == "Conta Corrente":
+            nova_conta = Corrente(correntista, email, saldo, limite, tipo_conta)
+            nova_conta.fechar_mes()
+            salvando_arquivo_json(nova_conta.dicionario())
+
+        if tipo_conta == "Conta Poupança":
+            nova_conta = Poupanca(correntista, email, saldo, limite, tipo_conta)
+            nova_conta.fechar_mes()
+            salvando_arquivo_json(nova_conta.dicionario())
+
+        if tipo_conta == "Conta Cashback":
+            nova_conta = Cashback(correntista, email, saldo, limite, tipo_conta)
+            nova_conta.fechar_mes()
+            salvando_arquivo_json(nova_conta.dicionario())
+
+   
+
 def deletar_conta_json(conta):
     dados = lendo_arquivo_json()
 
@@ -52,5 +81,7 @@ def deletar_conta_json(conta):
         salvando_arquivo_json(dados)
     else:
         print("Conta não encontrada.")
+
+
 
 
