@@ -50,24 +50,23 @@ def fechar_todas_contas():
         correntista = conta["Nome"]
         email = conta["Email"]
         saldo = float(conta["Saldo"])
-        limite = float(conta["Limite"]) if conta["Limite"] is not None else 0.0
+        limite = float(conta["Limite"]) if conta["Limite"] is not None else None
         tipo_conta = conta["Tipo Conta"]
+        historico = conta["Historico"]
 
-        if tipo_conta == "Conta Corrente":
-            nova_conta = Corrente(correntista, email, saldo, limite, tipo_conta)
-            nova_conta.fechar_mes()
-            salvando_arquivo_json(nova_conta.dicionario())
+        if tipo_conta == "Corrente":
+            nova_conta = Corrente(correntista, email, limite)
 
-        if tipo_conta == "Conta Poupança":
-            nova_conta = Poupanca(correntista, email, saldo, limite, tipo_conta)
-            nova_conta.fechar_mes()
-            salvando_arquivo_json(nova_conta.dicionario())
+        elif tipo_conta == "Poupança":
+            nova_conta = Poupanca(correntista, email)
 
-        if tipo_conta == "Conta Cashback":
-            nova_conta = Cashback(correntista, email, saldo, limite, tipo_conta)
-            nova_conta.fechar_mes()
-            salvando_arquivo_json(nova_conta.dicionario())
-
+        elif tipo_conta == "Cashback":
+            nova_conta = Cashback(correntista, email)
+            
+        nova_conta.depositar(saldo)
+        nova_conta.historico_da_conta = historico
+        nova_conta.fechar_mes()
+        salvando_arquivo_json(nova_conta.dicionario())
    
 
 def deletar_conta_json(conta):

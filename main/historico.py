@@ -2,9 +2,9 @@ from datetime import datetime
 
 
 class Historico():
-    def __init__(self):
+    def __init__(self, historico:list = []):
         self.data_atual = datetime.today()
-        self.historico = []
+        self.historico = historico
 
 
 

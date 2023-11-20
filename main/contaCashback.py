@@ -30,6 +30,12 @@ class Cashback(ContaBancaria):
         else:
             return mensagens_erro.saldo_insuficiente_saque(valor)
     
+    
+    def criar_conta(self):
+        self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Criação da conta do {self.email}")
+        return mensagens_sucesso.sucesso_criacao_conta(self.correntista, self.email, self.tipo_conta)
+
+
     def depositar(self, valor: float):
         return super().depositar(valor)
 

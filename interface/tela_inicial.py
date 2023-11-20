@@ -15,6 +15,7 @@ from main.contaCorrente import Corrente
 from main.contaCashback import Cashback
 from main.contaBancaria import ContaBancaria
 from main.mensagens import MensagensErro, MensagensSucesso
+from main.historico import Historico
 from interface.dados import atualiza_arquivo_json
 from interface.dados import deletar_conta_json
 from interface.dados import lendo_arquivo_json
@@ -69,6 +70,7 @@ def tela_inicial():
             pass
 
 def criar_conta():
+    conta = None
     nome = input(str("Digite o nome do dono da conta: "))
     email = input(str("Digite o email do dono da conta: "))
 
@@ -85,18 +87,18 @@ def criar_conta():
 
     if tipo_conta == "1":
         conta = Poupanca(nome, email)
-        conta.criar_conta()
 
     elif tipo_conta == "2":
         conta = Cashback(nome, email)
-        conta.criar_conta()
 
     elif tipo_conta == "3":
         conta = Corrente(nome, email)
-        conta.criar_conta()
 
     elif tipo_conta == "9":
         tela_inicial()
+
+    conta.historico_da_conta = Historico([])
+    conta.criar_conta()
 
     atualiza_arquivo_json(conta.dicionario())
 

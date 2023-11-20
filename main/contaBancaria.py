@@ -18,7 +18,6 @@ class ContaBancaria(abc.ABC):
         self._saldo = 0.0
         self._limite = limite
         self._historico_da_conta = Historico()
-        self._lista_de_contas = []
         self._tipo_conta = tipo_conta
 
     @property
@@ -62,14 +61,6 @@ class ContaBancaria(abc.ABC):
         self._limite = novo_limite
 
     @property
-    def lista_de_contas(self):
-        return self._lista_de_contas
-
-    @lista_de_contas.setter
-    def lista_de_contas(self, nova_lista_de_contas):
-        self._lista_de_contas = nova_lista_de_contas
-
-    @property
     def tipo_conta(self):
         return self._tipo_conta
 
@@ -91,18 +82,9 @@ class ContaBancaria(abc.ABC):
         self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Depósito de R$ {valor}")
         return mensagem_sucesso.sucesso_deposito(valor) + f' \n Saldo atual: {self.saldo}'
 
-
+    @abc.abstractmethod
     def criar_conta(self):
-        nova_conta = {
-            "Correntista": str(self.correntista),
-            "Email": str(self.email),
-            "Saldo": str(self.saldo),
-            "Limite": str(self.limite),
-            "Tipo": str(self.tipo_conta)
-        }
-        self.lista_de_contas.append(nova_conta)
-        self.historico_da_conta.gravar_operacao(data=datetime.now(), operacao=f"Criação da conta do {self.email}")
-        return mensagem_sucesso.sucesso_criacao_conta(self.correntista, self.email, self.tipo_conta)
+        ...
 
     def buscar_conta(self, email):
         dados = self.lendo_arquivo_json()
@@ -116,6 +98,7 @@ class ContaBancaria(abc.ABC):
                     self.limite = None
                 self.correntista = conta["Nome"]
                 self.tipo_conta = conta["Tipo Conta"]
+                self.historico_da_conta = Historico(conta["Historico"])
                 return conta
         else:
             return mensagem_erro.conta_nao_encontrada(email,tipo=self.tipo_conta)
